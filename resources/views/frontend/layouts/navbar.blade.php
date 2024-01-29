@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg main_menu" id="main_menu_area">
     <div class="container">
         <a class="navbar-brand" href="index.html">
-            <img src="{{ asset('frontend/images/logo.png') }}" alt="Rabins">
+            <img style="max-width: 150%" src="{{ asset('uploads/aincode-solution-high-resolution-logo-transparent (2).png') }}" alt="Rabins">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

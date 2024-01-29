@@ -61,7 +61,7 @@
             </div>
             <div class="col-lg-6 d-none d-lg-block">
                 <figure class="single-image text-right wow fadeInRight">
-                    <img src="images/skill.jpg" alt="">
+                    <img src="{{ asset('frontend/images/skill.jpg') }}" alt="">
                 </figure>
             </div>
         </div>

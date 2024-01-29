@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>Admin | Aincode Portfolio</title>
 
   <link rel="icon" type="image/png" href="{{ asset('backend/assets/img/aincrad_logo.png') }}">
@@ -23,6 +24,8 @@
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
+
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>
@@ -39,12 +42,20 @@
       </div>
       <footer class="main-footer">
         <div class="footer-left">
+            By <a href="#">Aincode Design</a>
+        </div>
+        <div class="footer-right">
+          2024
+        </div>
+      </footer>
+      {{-- <footer class="main-footer">
+        <div class="footer-left">
           Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
         </div>
         <div class="footer-right">
           2.3.0
         </div>
-      </footer>
+      </footer> --}}
     </div>
   </div>
 
@@ -65,6 +76,7 @@
   <script src="{{ asset('backend/assets/js/plugins/daterangepicker.js') }}"></script>
   <script src="{{ asset('backend/assets/js/plugins/select2.full.min.js') }}"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
   <!-- Template JS File -->
@@ -76,13 +88,65 @@
   <!-- Page Specific JS File -->
   <script src="{{ asset('backend/assets/js/page/forms-advanced-forms.js') }}"></script>
 
-  <script>
-    @if ($errors->any())
-        @foreach ($errors->all() as $error)
-            toastr.error("{{$error}}")
-        @endforeach
-    @endif
+  {{-- CSRF Token AJAX --}}
+  <script type="text/javascript">
+
   </script>
+
+  {{-- Toastr --}}
+    <script>
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                toastr.error("{{$error}}")
+            @endforeach
+        @endif
+    </script>
+
+    {{-- SweetAlert2 --}}
+    <script>
+        $(document).ready(function(){
+            // Csrf token
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            // sweet alert for delet
+            $('body').on('click', '.delete-item', function(e){
+                e.preventDefault();
+                let deleteUrl = $(this).attr('href');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: deleteUrl,
+                            success: function(data){
+                                Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                                })
+                                window.location.reload();
+                            },
+                            error: function(xhr, status, error){
+                                console.log(error);
+                            }
+                        })
+                    }
+                });
+            })
+        })
+    </script>
+
+    @stack('scripts')
 </body>
 </html>
 
