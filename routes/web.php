@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\DashboardController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('portfolio-details/{id}', [HomeController::class, 'showPortfolio'])->name('show.portfolio');
 
 Route::get('/blog', function () {
     return view('frontend.blog');
@@ -31,10 +32,6 @@ Route::get('/portfolio', function () {
     return view('frontend.portfolio');
 });
 
-Route::get('/portfolio-details', function () {
-    return view('frontend.portfolio-details');
-});
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -46,3 +43,4 @@ Route::middleware('auth')->group(function () {
 Route::get('resume/download', [AboutController::class, 'resumeDownload'])->name('resume.download');
 
 require __DIR__.'/auth.php';
+

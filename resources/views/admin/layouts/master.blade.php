@@ -20,7 +20,8 @@
   <link rel="stylesheet" href="{{ asset('backend/assets/css/plugins/daterangepicker.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/assets/css/plugins/select2.min.css') }}">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
@@ -79,7 +80,8 @@
   <script src="{{ asset('backend/assets/js/plugins/jquery.uploadPreview.min.js') }}"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+  <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 
   <!-- Template JS File -->
   <script src="{{ asset('backend/assets/js/scripts.js') }}"></script>
@@ -89,11 +91,6 @@
   <script src="{{ asset('backend/assets/js/page/features-post-create.js') }}"></script>
   <!-- Page Specific JS File -->
   <script src="{{ asset('backend/assets/js/page/forms-advanced-forms.js') }}"></script>
-
-  {{-- CSRF Token AJAX --}}
-  <script type="text/javascript">
-
-  </script>
 
   {{-- Toastr --}}
     <script>
@@ -131,12 +128,20 @@
                             type: 'DELETE',
                             url: deleteUrl,
                             success: function(data){
-                                Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                icon: "success"
-                                })
-                                window.location.reload();
+                                if (data.status == 'error') {
+                                    Swal.fire({
+                                        title: "You can not delete!",
+                                        text: "This portfolio category contain items cant be deleted!",
+                                        icon: 'error'
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        title: "Deleted!",
+                                        text: "Your file has been deleted.",
+                                        icon: "success"
+                                    })
+                                    window.location.reload();
+                                }
                             },
                             error: function(xhr, status, error){
                                 console.log(error);
