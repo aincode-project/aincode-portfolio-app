@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\PortfolioSectionSetting;
+use App\Models\SkillSectionSetting;
 use Illuminate\Http\Request;
 
-class PortfolioSectionSettingController extends Controller
+class SkillSectionSettingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $portfolio_setting = PortfolioSectionSetting::first();
-        return view('admin.portfolio-setting.index', compact('portfolio_setting'));
+        $skill_setting = SkillSectionSetting::first();
+        return view('admin.skill-setting.index', compact('skill_setting'));
     }
 
     /**
@@ -56,20 +56,24 @@ class PortfolioSectionSettingController extends Controller
     {
         $request->validate([
             'title' => ['required', 'max:200'],
-            'sub_title' => ['required', 'max:500'],
-            'image' => ['required', 'image', 'max:5000']
+            'sub_title' => ['required', 'max:500']
         ]);
 
-        PortfolioSectionSetting::updateOrCreate(
+        $skill_setting = SkillSectionSetting::first();
+        $imagePath = handleUpload('image', 'skill', $skill_setting);
+
+        SkillSectionSetting::updateOrCreate(
             ['id' => $id],
             [
                 'title' => $request->title,
                 'sub_title' => $request->sub_title,
+                'image' => (!empty($imagePath) ? $imagePath : $skill_setting->image)
             ]
         );
 
         toastr()->success('Updated Successfully', 'Congrats');
-        return redirect()->back();
+        return redirect()->route('admin.skill-section-setting.index');
+
     }
 
     /**

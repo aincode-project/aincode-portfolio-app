@@ -37,8 +37,17 @@
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Portfolio Section</span></a>
             <ul class="dropdown-menu" style="display: none;">
               <li><a class="nav-link" href="{{ route('admin.portfolio-category.index') }}">Category</a></li>
-              <li><a class="nav-link" href="{{ route('admin.portfolio-item.index') }}">Portfolio Item</a></li>
+              <li><a class="nav-link" href="{{ route('admin.portfolio-item.index') }}">Portfolio Items</a></li>
               <li><a class="nav-link" href="{{ route('admin.portfolio-section-setting.index') }}">Portfolio Setting</a></li>
+
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Skill Section</span></a>
+            <ul class="dropdown-menu" style="display: none;">
+                <li><a class="nav-link" href="{{ route('admin.skill-item.index') }}">Skill Items</a></li>
+              <li><a class="nav-link" href="{{ route('admin.skill-section-setting.index') }}">Skill Setting</a></li>
 
             </ul>
           </li>

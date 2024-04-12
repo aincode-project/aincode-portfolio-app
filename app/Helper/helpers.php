@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\File;
 
+/** Upload File */
 function handleUpload($inputName, $fileLocation, $model=null)
 {
     try {
@@ -25,9 +26,17 @@ function handleUpload($inputName, $fileLocation, $model=null)
     }
 }
 
+/** Delete File */
 function handelDelete(string $filePath)
 {
     if (File::exists(public_path($filePath))) {
         File::delete(public_path($filePath));
     }
+}
+
+/** Get Dynamic Colors */
+function getColor($index) {
+    $colors = ['#558bff', '#fecc90', '#ff885e', '#282828', '#190844', '#9dd3ff'];
+
+    return $colors[$index % count($colors)];
 }
