@@ -6,6 +6,7 @@ use App\Models\Hero;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\About;
+use App\Models\Experience;
 use App\Models\PortfolioCategory;
 use App\Models\PortfolioItem;
 use App\Models\PortfolioSectionSetting;
@@ -27,6 +28,7 @@ class HomeController extends Controller
         $portfolioItems = PortfolioItem::all();
         $skillTitle = SkillSectionSetting::first();
         $skillItems = SkillItem::all();
+        $experience = Experience::first();
         return view('frontend.home', compact(
             'hero',
             'typerTitles',
@@ -36,7 +38,8 @@ class HomeController extends Controller
             'portfolioCategories',
             'portfolioItems',
             'skillTitle',
-            'skillItems'
+            'skillItems',
+            'experience'
         ));
     }
 
